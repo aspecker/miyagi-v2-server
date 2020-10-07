@@ -3,6 +3,8 @@ grails:
     profile: web
     codegen:
         defaultPackage: miyagi.v2
+    cors:
+        enabled: true
     gorm:
         reactor:
             # Whether to translate GORM events into Reactor events
@@ -107,7 +109,7 @@ dataSource:
 environments:
     development:
         dataSource:
-            dbCreate: create-drop
+            dbCreate: update
             url: jdbc:postgresql://localhost:5432/postgres
     test:
         dataSource:
