@@ -4,6 +4,7 @@ import grails.converters.JSON
 
 class PersonController {
     def personService
+    def mapService
 
     def index() {
         render Person.listOrderByLastName() as JSON
@@ -30,8 +31,8 @@ class PersonController {
 
     def calculateDistance(String address) {
         if (address == "") {
-            return render(status: 400, text: "Address must be provided");
+            return render(status: 400, text: "Address must be provided")
         }
-        return MapService.calculateDistance(address)
+        render mapService.calculateDistance(address)
     }
 }
