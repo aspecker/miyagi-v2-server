@@ -2,6 +2,8 @@ package miyagi.v2
 
 import grails.gorm.transactions.Transactional
 
+import java.time.Instant
+
 @Transactional
 class PersonService {
 
@@ -13,9 +15,6 @@ class PersonService {
 
     @Transactional(readOnly = true)
     def count() {
-//        return Person.list().groupBy {
-//            it.dateOfBirth.month
-//        }
         Integer[] monthCount = new Integer[12];
         Arrays.fill(monthCount, 0);
         Person.list().collect {
@@ -25,12 +24,29 @@ class PersonService {
         return monthCount;
     }
 
+    def convertStringToDate(String dateString) {
+        Instant i = Instant.parse(dateString);
+        return Date.from(i)
+    }
+
     def filter(String firstName, String lastName, String startDate, String endDate) {
-//        def interpolateString() = {}
         def c = Person.createCriteria()
-//        def results = c.list {
-//            like ("firstName", '%'+firstName+'%')
-//            and like {"lastName", }
-//        }
+        def result = c.list {
+            if (firstName) {
+                like ("firstName", "%"+firstName+"%")
+            }
+            if (lastName) {
+                like("lastName", "%"+lastName+"%")
+            }
+            if (startDate != null && endDate != null) {
+                between("dateOfBirth", convertStringToDate(startDate), convertStringToDate(endDate))
+            } else if (startDate != null) {
+                between("dateOfBirth", convertStringToDate(startDate), new Date())
+            } else if (endDate != null) {
+                between("dateOfBirth", Date.from(Instant.EPOCH), convertStringToDate(endDate))
+            }
+            order("lastName", "asc")
+        }
+        return result
     }
 }

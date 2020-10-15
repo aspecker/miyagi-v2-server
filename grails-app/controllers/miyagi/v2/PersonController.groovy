@@ -20,6 +20,6 @@ class PersonController {
     }
 
     def filter(String firstName, String lastName, String startDate, String endDate) {
-        render personService.filter(firstName, lastName, startDate, endDate);
+        render personService.filter(firstName, lastName, startDate, endDate) as JSON
     }
 }
