@@ -30,14 +30,13 @@ class PersonController {
     }
 
     def calculateDistance(String address) {
+        if (address == "" || address == null) {
+            return render(status: 400, text: "Missing required fields: address.")
+        }
         def mapResponse = mapService.calculateDistanceToGSHQ(address)
         if (mapResponse == 403) {
             return render(status: 403, text: "Missing API Key.")
         }
-        if (address == "" || address == null) {
-            return render(status: 400, text: "Missing required fields: address.")
-        }
-
         if (mapResponse == 404) {
             return render(status: 404, text: "Unable to connect to Maps server")
         }
