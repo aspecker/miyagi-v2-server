@@ -38,7 +38,7 @@ class PersonController {
             return render(status: 403, text: "Missing API Key.")
         }
         if (mapResponse == 404) {
-            return render(status: 404, text: "Unable to connect to Maps server")
+            return render(status: 404, text: "Invalid address.")
         }
 
         render(status: 200, text: mapResponse)
