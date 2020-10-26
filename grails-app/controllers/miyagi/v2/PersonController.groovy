@@ -49,6 +49,17 @@ class PersonController {
         if (response == 403) {
             return render(status: 403, text: "Missing API Key.")
         }
-        render response;
+        render response
+    }
+
+    def getLatLong(String address) {
+        if (address == "" || address == null) {
+            return render(status: 400, text: "Missing required fields: address.")
+        }
+        def response = mapService.getLatLongFromAddress(address)
+        if (response == 403) {
+            return render(status: 403, text: "Missing API Key.")
+        }
+        render response as JSON
     }
 }
