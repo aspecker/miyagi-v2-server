@@ -5,6 +5,7 @@ import spock.lang.Specification
 
 class PersonControllerSpec extends Specification implements ControllerUnitTest<PersonController> {
     PersonController personController = new PersonController()
+
     def setup() {
     }
 
@@ -22,10 +23,10 @@ class PersonControllerSpec extends Specification implements ControllerUnitTest<P
 
     void "gets 400 on empty string address"() {
         given:
-        String s = ""
+            String s = ""
         when:
-        personController.calculateDistance(s)
+            personController.calculateDistance(s)
         then:
-        response["status"] == 400
+            response["status"] == 400
     }
 }
