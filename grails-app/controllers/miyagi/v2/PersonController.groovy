@@ -43,4 +43,12 @@ class PersonController {
 
         render(status: 200, text: mapResponse)
     }
+
+    def getBrowserMapsCDN() {
+        def response = mapService.getClientMapsCDN()
+        if (response == 403) {
+            return render(status: 403, text: "Missing API Key.")
+        }
+        render response;
+    }
 }

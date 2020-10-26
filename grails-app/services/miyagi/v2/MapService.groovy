@@ -25,4 +25,15 @@ class MapService {
         s = s.replaceAll("[\\s]", "+")
         return s
     }
+
+    def getClientMapsCDN() {
+        def env = System.getenv()
+        def BROWSER_KEY = env['BROWSER_MAPS_API_KEY']
+        if (BROWSER_KEY == null) {
+            return 403
+        }
+        String mapBase = "https://maps.googleapis.com/maps/api/js?key="
+        String mapTail = "&callback=angular.noop&libraries=&v=weekly"
+        return mapBase + BROWSER_KEY + mapTail
+    }
 }
